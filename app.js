@@ -1,9 +1,12 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const port = 3000;
 
 // menggunakan ejs
 app.set('view engine', 'ejs');
+// menggunakan express-ejs-layouts dan masukan attribute layout: 'dir/file'
+app.use(expressLayouts);
 
 app.get('/', (req, res) => {
     const mahasiswa = [
@@ -20,15 +23,25 @@ app.get('/', (req, res) => {
             email: 'tomcat@ejs.co',
         }
     ]
-    res.render('index', { name: 'amriarendy', title: 'Halaman Home', mahasiswa});
+    res.render('index', { 
+        layout: 'layouts/main',
+        name: 'amriarendy', 
+        title: 'Halaman Home', 
+        mahasiswa});
 });
 
 app.get('/about', (req, res) => {
-    res.render('about', {title: 'Halaman About'});
+    res.render('about', { 
+        layout: 'layouts/main',
+        title: 'Halaman About',
+    });
 });
 
 app.get('/contact', (req, res) => {
-    res.render('contact', {title: 'Halaman Contact'});
+    res.render('contact', {
+        layout: 'layouts/main',
+        title: 'Halaman Contact'
+    });
 });
 
 app.get('/product/:id', (req, res) => {
