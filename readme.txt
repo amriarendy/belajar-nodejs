@@ -1,15 +1,24 @@
+*info spec
 nodejs v16.16.0
 npm v8.11.0
 
+*modules spec
 exspress@4.17.1
 nodemon
 ejs@3.1.6
 express-ejs-layouts@2.5.0 https://www.npmjs.com/package/express-ejs-layouts 
+morgan@1.10.0
 
-How to start
-start in terminal > nodemon app
-in browser url > http://localhost:3000
+*how to running
+how to start?
+starting terminal > nodemon app
+open in browser url > http://localhost:3000
 
+*tools and plugin
+prettier plugin
+mengignore plugin prettier buat file .prettierignore dan ketik *.ejs
+
+*description module
 view engine
 memungkinkan untuk membuat file tempate statis untuk aplikasi
 engine untuk mengganti variable di template dengan nilai sebenarnya, dan menampilkan dalam bentuk html
@@ -20,3 +29,13 @@ sebuah sistem layout dari ejs biar 1 main template
 const expressLayouts = require('express-ejs-layouts');
 // menggunakan express-ejs-layouts dan masukan attribute layout: 'dir/file'
 app.use(expressLayouts);
+
+Built-in middleware
+untuk membuat folder assets (foto, docx, css dll) bisa di akses public
+app.use(express.static('public'));
+
+express middleware
+susunan middleware level beraturan yaitu dibaca dari bawah ke atas
+
+Third-party middleware
+morgan
