@@ -12,14 +12,21 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% if (contacts.length === 0 ) { %>
+                    <div class="alert alert-danger" role="alert">
+                      Data Kosong <a href="/" class="alert-link">Halaman Utama</a>
+                    </div>
+                  <% } %>
+                  <% contacts.forEach((contact, i) => { i++ %>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Amria Rendy</td>
-                    <td>+628888888888</td>
+                    <th scope="row"><%= i++ %></th>
+                    <td><%= contact.nama %></td>
+                    <td><%= contact.nohp %></td>
                     <td>
-                        <a class="btn btn-success badge rounded-pill" href=""><i class="bi bi-info-circle"></i> detail</a>
+                      <a class="btn btn-success badge rounded-pill" href="/contact/<%= contact.nama %>"><i class="bi bi-info-circle"></i> detail</a>
                     </td>
                   </tr>
+                  <% }) %>
                 </tbody>
               </table>
         </div>
