@@ -1,6 +1,10 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const { loadContact, findContact } = require('./utils/contacts');
+const { loadContact, findContact, addContact, cekDuplikat } = require('./utils/contacts');
+const { body, validationResult, check } = require('express-validator');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
 const app = express();
 const port = 3000;
@@ -11,6 +15,18 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 // Built-in middleware
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
+// Konfigurasi flash
+app.use(cookieParser());
+app.use(session({
+    cookie: { maxAge: 6000 },
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+})
+);
+app.use(flash());
 
 app.get('/', (req, res) => {
     const mahasiswa = [
@@ -47,7 +63,43 @@ app.get('/contact', (req, res) => {
         layout: 'layouts/main',
         title: 'Halaman Contact',
         contacts,
+        msg: req.flash('msg'),
     });
+});
+
+app.get('/contact/add', (req, res) => {
+    res.render('add-contact', {
+        layout: 'layouts/main',
+        title: 'Halaman Tambah Contact',
+    });
+});
+
+app.post('/contact', [
+    body('nama').custom((value) => {
+        const duplikat = cekDuplikat(value);
+        if(duplikat) {
+            throw new Error('Nama kontak telah digunakan');
+        }
+        return true;
+    }),
+    body('email').isEmail(),
+    check('nohp', 'No Handphone Harus +62').isMobilePhone('id-ID'),
+    ], 
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            // return res.status(400).json({errors: errors.array()});
+            res.render('add-contact', {
+                layout: 'layouts/main',
+                title: 'Halaman Tambah Contact',
+                errors: errors.array(),
+            })
+        } else {
+            addContact(req.body);
+            // Kirimkan flash message
+            req.flash('msg', 'Data kontak berhasil ditambahkan');
+            res.redirect('/contact');
+        }
 });
 
 app.get('/contact/:nama', (req, res) => {

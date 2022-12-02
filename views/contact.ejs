@@ -2,6 +2,12 @@
     <div class="row">
         <div class="col-md-8">
             <h2>Daftar Kontak</h2>
+            <a class="btn btn-primary" href="/contact/add">Tambah</a>
+            <% if (msg.length !== 0) { %>
+              <div class="alert alert-success mt-3" role="alert">
+                <b>Sukses!</b> Data berhasil di proses
+              </div>
+            <% } %>
             <table class="table">
                 <thead>
                   <tr>

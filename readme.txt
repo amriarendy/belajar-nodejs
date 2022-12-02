@@ -8,6 +8,10 @@ nodemon
 ejs@3.1.6
 express-ejs-layouts@2.5.0 https://www.npmjs.com/package/express-ejs-layouts 
 morgan@1.10.0
+express-validator@6.10.1
+express-session@1.17.1
+cookie-parser@1.4.5
+connect-flash@0.1.1
 
 *how to running
 how to start?
@@ -41,3 +45,8 @@ susunan middleware level beraturan yaitu dibaca dari bawah ke atas
 
 Third-party middleware
 morgan for routing
+
+jika ada notifikasi ini
+body-parser deprecated undefined extended: provide extended option
+maka berikan { extended: true }
+app.use(express.urlencoded({ extended: true }));
