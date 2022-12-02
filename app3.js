@@ -1,5 +1,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const morgan = require('morgan');
 const app = express();
 const port = 3000;
 
@@ -7,8 +8,28 @@ const port = 3000;
 app.set('view engine', 'ejs');
 // menggunakan express-ejs-layouts dan masukan attribute layout: 'dir/file'
 app.use(expressLayouts);
+
+//Third-party Route
+app.use(morgan('dev'));
+
 // Built-in middleware
 app.use(express.static('public'));
+
+// Application level middleware
+app.use((req, res, next) => {
+    console.log('Time: ', Date.now());
+    next();
+});
+
+app.use((req, res, next) => {
+    console.log('Ini Middleware Ke-2');
+    next();
+});
+
+app.use((req, res, next) => {
+    console.log('Ini Middleware Ke-3');
+    next();
+});
 
 app.get('/', (req, res) => {
     const mahasiswa = [
@@ -44,6 +65,10 @@ app.get('/contact', (req, res) => {
         layout: 'layouts/main',
         title: 'Halaman Contact'
     });
+});
+
+app.get('/product/:id', (req, res) => {
+    res.send(`Product ID : ${req.params.id} <br> Category ID : ${req.query.category}`);
 });
 
 app.use('/', (req, res) => {

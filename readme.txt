@@ -13,10 +13,12 @@ morgan@1.10.0
 how to start?
 starting terminal > nodemon app
 open in browser url > http://localhost:3000
+uninstall modules npm uninstall modules_apa_yang_mau_dihapus
 
 *tools and plugin
 prettier plugin
 mengignore plugin prettier buat file .prettierignore dan ketik *.ejs
+getbootsrtap
 
 *description module
 view engine
@@ -38,4 +40,4 @@ express middleware
 susunan middleware level beraturan yaitu dibaca dari bawah ke atas
 
 Third-party middleware
-morgan
+morgan for routing
